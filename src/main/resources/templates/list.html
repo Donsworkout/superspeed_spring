@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +9,8 @@
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta charset="UTF-8">
-<title>인덱스</title>
+<title>member list</title>
 </head>
-
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">Navbar</a>
@@ -42,9 +40,11 @@
 			</form>
 		</div>
 	</nav>
-	<div class="container">
-		<h1 class="center">도현</h1>
-	</div>
+	<ul class="list-group list-group-horizontal-lg">
+		{{#users}}
+		<li class="list-group-item">name is {{name}}, email is {{email}},
+			id is {{userId}}</li> {{/users}}
+	</ul>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
