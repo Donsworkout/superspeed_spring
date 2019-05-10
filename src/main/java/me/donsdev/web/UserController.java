@@ -1,5 +1,7 @@
 package me.donsdev.web;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,26 @@ public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@GetMapping("/login")
+	private String login_form() {
+		return "/user/login";
+	}
+	
+	@PostMapping("/login")
+	private String login(String userId, String password, HttpSession session) {
+		System.out.println(userRepository.findByUserId(userId));
+		User user = userRepository.findByUserId(userId);
+		System.out.println(user.getPassword());
+		if(user == null || !password.equals(user.getPassword())) {
+			System.out.println("login FAILED");
+			return "redirect:/users/login";
+		}else if(password.equals(user.getPassword())) {
+			session.setAttribute("user", user);
+			System.out.println("login SUCCESS");	
+		}
+		return "redirect:/";
+	}
 	
 	@PostMapping("")
 	private String create(User user) {

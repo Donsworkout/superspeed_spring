@@ -35,6 +35,21 @@ public class User {
 		this.password = newUser.password;
 		this.email = newUser.email;
 	}
+	public long getId() {
+		return this.id;
+	}
+	public String getUserId() {
+		return this.userId;
+	}
+	public String getName() {
+		return this.name;
+	}
+	public String getPassword() {
+		return this.password;
+	}
+	public String getEmail() {
+		return this.email;
+	}
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", name=" + name + ", password=" + password + ", email=" + email + "]";
