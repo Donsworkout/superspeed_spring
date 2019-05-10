@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>{{> /include/head}}
+</head>
+<body>
+	{{> /include/navigation}}
+	<div class="container pt-4">
+		<div class="card-columns">
+		{{#questions}}
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">{{title}}</h5>
+					<p class="card-text">{{contents}}</p>
+					<p class="card-text">
+						<small class="text-muted">Written by {{writer}}</small>
+					</p>
+				</div>
+			</div>
+		{{/questions}}
+		</div>
+	</div>
+</body>
+{{> /include/default_js}}
+</html>
