@@ -5,8 +5,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import me.donsdev.domain.Question;
@@ -34,7 +37,53 @@ public class QuestionController {
 		}
 		return "/questions/form";
 	}
+
+	@GetMapping("/{id}")
+	public String show(@PathVariable Long id, Model model) {
+		Question question = questionRepository.getOne(id);
+		if(question == null) {
+			return "redirect:/";
+		}
+		model.addAttribute("question", questionRepository.getOne(id));
+		return "/questions/show";
+	}
 	
+	@GetMapping("/{id}/edit")
+	public String edit(@PathVariable Long id, Model model, HttpSession session) {
+		Question question = questionRepository.getOne(id);
+		if(!question.isMyQuestion(session) || question == null) {
+			return "redirect:/questions/{id}";
+		}
+		model.addAttribute("question", questionRepository.getOne(id));
+		return "/questions/edit_form";
+	}
+	
+	@PutMapping("/{id}")
+	public String upadteQuestion(@PathVariable Long id, Question updatedQuestion, HttpSession session) {
+		Question question = questionRepository.getOne(id);
+		if(!HttpSessionUtils.isLoginUser(session)){
+			return "redirect:/users/login";
+		}
+		if(!question.isMyQuestion(session) || question == null) {
+			return "redirect:/questions/{id}";
+		}
+		question.update(updatedQuestion);
+		questionRepository.save(question);
+		return "redirect:/questions/{id}";
+	}
+	
+	@DeleteMapping("/{id}")
+	public String deleteQuestion(@PathVariable long id, Question deleteQuestion, HttpSession session) {
+		Question question = questionRepository.getOne(id);
+		if(!HttpSessionUtils.isLoginUser(session)){
+			return "redirect:/users/login";
+		}
+		if(!question.isMyQuestion(session) || question == null) {
+			return "redirect:/questions/{id}";
+		}	
+		questionRepository.delete(question);
+		return "redirect:/questions";
+	}
 	
 	@PostMapping("")
 	public String create(String title, String contents, HttpSession session) {

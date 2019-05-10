@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>{{> /include/head}}
+</head>
+<body>
+	{{> /include/navigation}}
+	<div class="container pt-4">
+		<div class="row">
+			<div class="col-0 col-md-3"></div>
+			<div class="col-12 col-md-6">
+				{{#question}}
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">{{title}}</h5>
+						<p class="card-text">{{contents}}</p>
+						<p class="card-text">
+							<small class="text-muted">{{FormattedCreateDate}} written by {{writer.userId}}</small>
+						</p>
+						<form action="/questions/{{id}}" method="POST">
+							<input type="hidden" name="_method" value="DELETE"/>
+							<a href="/questions/{{id}}/edit" class="btn btn-success">수정</a>
+							<button type="submit" class="btn btn-danger">삭제</button>
+						</form> 
+					</div>
+				</div>
+				{{/question}}
+			</div>
+			<div class="col-0 col-md-3"></div>
+		</div>
+	</div>
+</body>
+{{> /include/default_js}}
+</html>

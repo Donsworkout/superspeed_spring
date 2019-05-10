@@ -9,8 +9,9 @@
 		{{#questions}}
 			<div class="card">
 				<div class="card-body">
-					<h5 class="card-title">{{title}}</h5>
-					<p class="card-text">{{contents}}</p>
+					<a href="/questions/{{id}}">
+						<h5 class="card-title">{{title}}</h5>
+					</a>
 					<p class="card-text">
 						<small class="text-muted">{{FormattedCreateDate}} written by {{writer.userId}}</small>
 					</p>

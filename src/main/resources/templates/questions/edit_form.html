@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>{{> /include/head}}
+</head>
+<body>
+	{{> /include/navigation}}
+	<div class="container pt-4">
+		<form name="question" method="post" action="/questions/{{id}}">
+			{{#question}}
+			<input type="hidden" name="_method" value="put"/> 
+			<div class="form-group">
+				<label for="formGroupExampleInput2">제목</label> <input
+					type="text" name="title" value="{{title}}" class="form-control" id="formGroupExampleInput2"
+					placeholder="Another input">
+			</div>
+			<div class="form-group">
+				<label for="exampleFormControlTextarea1">내용</label>
+				<textarea name="contents" class="form-control" id="exampleFormControlTextarea1"
+					rows="3">{{contents}}</textarea>
+			</div>
+			{{/question}}
+			<button type="submit" class="btn btn-primary">저장</button>
+		</form>
+	</div>
+</body>
+{{> /include/default_js}}
+</html>

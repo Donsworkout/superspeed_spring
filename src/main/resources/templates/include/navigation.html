@@ -17,6 +17,8 @@
 			<li class="nav-item"><a class="nav-link" href="/users/new">회원가입</a>
 			</li>
 			{{/sessionUser}}
+			<li class="nav-item"><a class="nav-link" href="/questions">질문목록</a>
+			</li>
 			{{#sessionUser}}
 			<li class="nav-item"><a class="nav-link" href="/questions/new">질문하기</a>
 			</li>
@@ -27,10 +29,6 @@
 			<li class="nav-item"><a class="nav-link" href="/users/logout">로그아웃</a>
 			</li>
 			{{/sessionUser}}
-			<li class="nav-item"><a class="nav-link" href="/questions">질문목록</a>
-			</li>
-			<li class="nav-item"><a class="nav-link disabled" href="#"
-				tabindex="-1" aria-disabled="true">Disabled</a></li>
 		</ul>
 		<form class="form-inline my-2 my-lg-0">
 			<input class="form-control mr-sm-2" type="search"

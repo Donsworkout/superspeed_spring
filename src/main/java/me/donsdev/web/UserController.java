@@ -46,10 +46,11 @@ public class UserController {
 	}
 	
 	@PostMapping("")
-	private String create(User user) {
+	private String create(User user, HttpSession session) {
 		System.out.println(user);
 		userRepository.save(user);
-		return "redirect:/users/login"; 
+		session.setAttribute(HttpSessionUtils.CURRENT_USER, user);
+		return "redirect:/"; 
 	}
 	
 	@GetMapping("/new")
