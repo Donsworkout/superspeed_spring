@@ -34,7 +34,7 @@ public class UserController {
 			System.out.println("login FAILED");
 			return "redirect:/users/login";
 		}else if(password.equals(user.getPassword())) {
-			session.setAttribute("user", user);
+			session.setAttribute("sessionUser", user);
 			System.out.println("login SUCCESS");	
 		}
 		return "redirect:/";
@@ -42,7 +42,7 @@ public class UserController {
 	
 	@GetMapping("/logout")
 	private String logout(HttpSession session) {
-		session.removeAttribute("user");
+		session.removeAttribute("sessionUser");
 		return "redirect:/";
 	}
 	
@@ -59,14 +59,41 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}/edit")
-	private String edit_user_form(@PathVariable Long id, Model model) {
+	private String edit_user_form(@PathVariable Long id, Model model, HttpSession session) {
 		if (userRepository.existsById(id)){
+			User sessionUser = (User) session.getAttribute("sessionUser");
 			User user = userRepository.findById(id).get();
+			if(sessionUser == null){
+				return "redirect:/users/login";
+			}
+			if(sessionUser.getId() != user.getId()) {
+				System.out.println("req login");
+				System.out.println(sessionUser);
+				return "redirect:/users";			
+			}
 			model.addAttribute("user", user);
 		}else {
-			return "redirect:/users";
+			return "redirect:/";
 		}
 		return "/user/edit_form";
+	}
+
+	@PutMapping("/{id}/update")
+	private String update(@PathVariable Long id, User updatedUser, HttpSession session) {
+		User sessionUser = (User) session.getAttribute("sessionUser");
+		if(sessionUser == null){
+			return "redirect:/users/login";
+		}
+		if(sessionUser.getId() != id) {
+			System.out.println("req login");
+			System.out.println(sessionUser);
+			return "redirect:/users";			
+		}
+		System.out.println(id);
+		User user = userRepository.findById(id).get();
+		user.update(updatedUser);
+		userRepository.save(user);
+		return "redirect:/users";
 	}
 	
 	@GetMapping("")
@@ -74,14 +101,4 @@ public class UserController {
 		model.addAttribute("users", userRepository.findAll());
 		return "/user/list";
 	}
-	
-	@PutMapping("/{id}/update")
-	private String update(@PathVariable Long id, User updated_user) {
-		System.out.println(id);
-		User user = userRepository.findById(id).get();
-		user.update(updated_user);
-		userRepository.save(user);
-		return "redirect:/users";
-	}
-	
 }

@@ -11,18 +11,20 @@
 			<li class="nav-item active"><a class="nav-link" href="/">Home
 					<span class="sr-only">(current)</span>
 			</a></li>
-			{{^user}}
+			{{^sessionUser}}
 			<li class="nav-item"><a class="nav-link" href="/users/login">로그인</a>
 			</li>
 			<li class="nav-item"><a class="nav-link" href="/users/new">회원가입</a>
 			</li>
-			{{/user}}
-			{{#user}}
+			{{/sessionUser}}
+			{{#sessionUser}}
 			<li class="nav-item"><a class="nav-link" href="/users">회원목록</a>
+			</li>
+			<li class="nav-item"><a class="nav-link" href="/users/{{id}}/edit">회원정보 수정</a>
 			</li>
 			<li class="nav-item"><a class="nav-link" href="/users/logout">로그아웃</a>
 			</li>
-			{{/user}}
+			{{/sessionUser}}
 			<li class="nav-item"><a class="nav-link disabled" href="#"
 				tabindex="-1" aria-disabled="true">Disabled</a></li>
 		</ul>
