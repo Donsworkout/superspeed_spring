@@ -42,7 +42,7 @@ public class QuestionController {
 			return "/users/login";			
 		}
 		User sessionUser = HttpSessionUtils.currentUser(session);
-		Question question = new Question(sessionUser.getUserId(), title, contents);
+		Question question = new Question(sessionUser, title, contents);
 		questionRepository.save(question);
 		return "redirect:/questions";
 	}
