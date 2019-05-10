@@ -30,7 +30,6 @@ public class UserController {
 	private String login(String userId, String password, HttpSession session) {
 		System.out.println(userRepository.findByUserId(userId));
 		User user = userRepository.findByUserId(userId);
-		System.out.println(user.getPassword());
 		if(user == null || !password.equals(user.getPassword())) {
 			System.out.println("login FAILED");
 			return "redirect:/users/login";
@@ -41,11 +40,17 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/logout")
+	private String logout(HttpSession session) {
+		session.removeAttribute("user");
+		return "redirect:/";
+	}
+	
 	@PostMapping("")
 	private String create(User user) {
 		System.out.println(user);
 		userRepository.save(user);
-		return "redirect:/users"; 
+		return "redirect:/users/login"; 
 	}
 	
 	@GetMapping("/new")
