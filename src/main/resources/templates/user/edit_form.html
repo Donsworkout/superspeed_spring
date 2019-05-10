@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+{{> /include/head}}
+</head>
+<body>
+{{> /include/navigation}}
+	{{#user}}
+	<div class="container pt-4">
+		<form action="/users/{{id}}/update" method="post">
+			<input type="hidden" name="id" value="{{id}}"/> 
+			<input type="hidden" name="_method" value="put"/> 
+			<div class="form-group">
+				<label for="exampleInputuserId">User ID</label> <input name="userId"
+					type="text" value="{{userId}}" class="form-control" id="exampleInputuserId"
+					aria-describedby="useridHelp" placeholder="Enter ID"> <small
+					id="useridHelp" class="form-text text-muted">ID Please </small>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Email address</label> <input
+					name="email" value="{{email}}" type="email" class="form-control"
+					id="exampleInputEmail1" aria-describedby="emailHelp"
+					placeholder="Enter email"> <small id="emailHelp"
+					class="form-text text-muted">We'll never share your email
+					with anyone else.</small>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputName">Name</label> <input name="name"
+					value="{{name}}" type="text" class="form-control" id="exampleInputName"
+					aria-describedby="nameHelp" placeholder="Enter name"> <small
+					id="nameHelp" class="form-text text-muted">Name please </small>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">Password</label> <input
+					name="password" value="{{password}}" type="password" class="form-control"
+					id="exampleInputPassword1" placeholder="Password">
+			</div>
+			<button type="submit" class="btn btn-primary">Save</button>
+		</form>
+	</div>
+	{{/user}}
+</body>
+{{> /include/default_js}}
+</html>

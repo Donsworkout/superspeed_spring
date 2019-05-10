@@ -4,5 +4,6 @@ spring boot 체험
 - Spring boot
 - JAVA 1.8
 - Mustache
-- Materialize
+- Bootstrap4
 - JPA / HIBERNATE
+- H2 DATABASE

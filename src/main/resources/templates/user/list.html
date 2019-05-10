@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+{{> /include/head}}
+</head>
+<body>
+{{> /include/navigation}}
+	<ul class="list-group list-group-horizontal-lg">
+		{{#users}}
+		<li class="list-group-item">
+			{{id}}. Name is {{name}}, email is {{email}}, userID is {{userId}} <a href="/users/{{id}}/edit">정보 수정</a>
+		</li> 
+		{{/users}}
+	</ul>
+</body>
+{{> /include/default_js}}
+</html>
