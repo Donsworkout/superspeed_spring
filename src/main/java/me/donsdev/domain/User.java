@@ -50,6 +50,10 @@ public class User {
 	public String getEmail() {
 		return this.email;
 	}
+	public boolean passwordMatch(String passwd) {
+		return this.getPassword().equals(passwd) && passwd != null;
+	}
+	
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", name=" + name + ", password=" + password + ", email=" + email + "]";
