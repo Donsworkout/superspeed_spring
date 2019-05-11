@@ -2,6 +2,7 @@ package me.donsdev.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.servlet.http.HttpSession;
 
 import me.donsdev.web.HttpSessionUtils;
@@ -23,6 +26,10 @@ public class Question {
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
 	private User writer;
+
+	@OneToMany(mappedBy="question")
+	@OrderBy("id ASC")
+	public List<Answer> answers;
 	
 	private String title;
 	

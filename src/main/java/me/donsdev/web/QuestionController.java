@@ -16,7 +16,6 @@ import me.donsdev.domain.Question;
 import me.donsdev.domain.QuestionRepository;
 import me.donsdev.domain.User;
 
-
 @Controller
 @RequestMapping("/questions")
 public class QuestionController {
@@ -44,18 +43,22 @@ public class QuestionController {
 		if(question == null) {
 			return "redirect:/";
 		}
-		model.addAttribute("question", questionRepository.getOne(id));
+		model.addAttribute("question", questionRepository.findById(id).get());
 		return "/questions/show";
 	}
 	
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable Long id, Model model, HttpSession session) {
 		Question question = questionRepository.getOne(id);
-		if(!question.isMyQuestion(session) || question == null) {
-			return "redirect:/questions/{id}";
+		try {
+			hasPermission(session, question);
+			model.addAttribute("question", questionRepository.getOne(id));
+			return "/questions/edit_form";
+		} catch (IllegalStateException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			System.out.println(e.getMessage());
+			return "/questions/" + id;
 		}
-		model.addAttribute("question", questionRepository.getOne(id));
-		return "/questions/edit_form";
 	}
 	
 	@PutMapping("/{id}")
@@ -69,7 +72,7 @@ public class QuestionController {
 		}
 		question.update(updatedQuestion);
 		questionRepository.save(question);
-		return "redirect:/questions/{id}";
+		return "redirect:/questions/%d";
 	}
 	
 	@DeleteMapping("/{id}")
@@ -94,5 +97,15 @@ public class QuestionController {
 		Question question = new Question(sessionUser, title, contents);
 		questionRepository.save(question);
 		return "redirect:/questions";
+	}
+	
+	private boolean hasPermission(HttpSession session, Question question) {
+		if (!HttpSessionUtils.isLoginUser(session)) {
+			throw new IllegalStateException("로그인이 필요합니다");
+		}
+		if(!question.isMyQuestion(session) || question == null) {
+			throw new IllegalStateException("권한이 없습니다");
+		}	
+		return false;
 	}
 }
