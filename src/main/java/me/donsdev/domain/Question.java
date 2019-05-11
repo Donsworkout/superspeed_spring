@@ -2,18 +2,23 @@ package me.donsdev.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
+import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.servlet.http.HttpSession;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import me.donsdev.web.HttpSessionUtils;
 
@@ -25,15 +30,18 @@ public class Question {
 	
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+	@JsonProperty
 	private User writer;
 
 	@OneToMany(mappedBy="question")
-	@OrderBy("id ASC")
-	public Collection<Answer> answers;
+	@OrderBy("id DESC")
+	private List<Answer> answers;
 	
+	@JsonProperty
 	private String title;
 	
-	@Column(length=20000)
+	@Lob
+	@JsonProperty
 	private String contents;
 	
 	private LocalDateTime createDate;

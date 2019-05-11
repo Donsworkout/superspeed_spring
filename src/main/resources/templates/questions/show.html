@@ -35,24 +35,21 @@
 								<small class="text-muted">{{createDate}} written by {{writer.userId}}</small>
 							</p>
 							<div class="text-right">
-								<form action="" method="POST">
-									<input type="hidden" name="_method" value="DELETE"/>
-									<button type="submit" class="btn btn-danger">삭제</button>
-								</form> 
+								<a href="/api/questions/{{question.id}}/answers/{{id}}" class="btn btn-danger link-delete-article">삭제</a>
 							</div>
 						</div>
 					</div>
 					{{/answers}}
 				</div>
 				<br>
-				<form action="/questions/{{id}}/answers" method="post">
+				<form action="/questions/{{id}}/answers" method="post" class="answer-write">
 					<div class="form-group">
 						<label for="exampleFormControlTextarea1">한마디</label>
 						<textarea name="contents" class="form-control" id="exampleFormControlTextarea1"
 							rows="3"></textarea>
 					</div>
 					<div class="text-right">
-						<button type="submit" class="btn btn-primary">답글달기</button>
+						<button type="submit" class="btn btn-primary" id="submitReply">답글달기</button>
 					</div>
 				</form>
 				{{/question}}
@@ -60,6 +57,42 @@
 			<div class="col-0 col-md-3"></div>
 		</div>
 	</div>
+<script>
+//답변삭제 클릭 이벤트 발생시 deleteAnswer 함수 호출
+$(".link-delete-article").click(deleteAnswer);
+// 답변삭제 AJAX 요청 처리를 위한 함수
+function deleteAnswer(e) {
+    e.preventDefault(); // a태그 기본효과 방지
+    var deleteBtn = $(this);
+    var url = deleteBtn.attr("href");
+    $.ajax({
+        type : 'delete',
+        url : url,
+        dataType : 'json',
+        error : function (xhr, status) {
+            console.log("error");
+        },
+        success : function (data, status) {
+            console.log(data);
+            if (data.valid) {
+                deleteBtn.closest(".card").remove();
+            } else {
+                alert(data.errorMsg);
+            }
+        }
+    });
+}
+</script>
+<script>
+  $(window).scroll(function() {
+    sessionStorage.scrollTop = $(this).scrollTop();
+  });
+  $(document).ready(function() {
+    if (sessionStorage.scrollTop != "undefined") {
+      $(window).scrollTop(sessionStorage.scrollTop);
+    }
+  });
+</script>
 </body>
-{{> /include/default_js}}
+{{> /include/default_set}}
 </html>

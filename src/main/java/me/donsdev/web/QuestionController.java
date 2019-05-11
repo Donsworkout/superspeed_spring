@@ -44,7 +44,7 @@ public class QuestionController {
 			return "redirect:/";
 		}
 		model.addAttribute("question", question);
-		System.out.println(question.answers);
+		//System.out.println(question.answers);
 		return "/questions/show";
 	}
 	

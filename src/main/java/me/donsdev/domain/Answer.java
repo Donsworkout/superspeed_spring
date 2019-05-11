@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.servlet.http.HttpSession;
+
+import me.donsdev.web.HttpSessionUtils;
 
 @Entity
 public class Answer {
@@ -18,10 +21,10 @@ public class Answer {
 
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
-	private User writer;
+    private User writer;
 	
 	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_question"))
 	private Question question;
 	
 	@Lob
@@ -31,6 +34,46 @@ public class Answer {
 	
 	public Answer() {}
 	
+	public Long getId() {
+		return id;
+	}
+
+	public User getWriter() {
+		return writer;
+	}
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public String getContents() {
+		return contents;
+	}
+
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setWriter(User writer) {
+		this.writer = writer;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+
 	public Answer(String contents, User writer, Question question) {
 		this.writer = writer;
 		this.question = question;
@@ -49,6 +92,19 @@ public class Answer {
 		return result;
 	}
 
+    public boolean isSameWriter(User loginUser) {
+        return loginUser.equals(this.writer);
+    }
+
+	public boolean isMyAnswer(HttpSession session) {
+		User user = HttpSessionUtils.currentUser(session);
+		if(user.getId() == this.writer.getId()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+    
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

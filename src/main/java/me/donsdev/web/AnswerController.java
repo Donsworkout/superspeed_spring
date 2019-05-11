@@ -29,7 +29,7 @@ public class AnswerController {
 			return "/users/login";			
 		}
 		User sessionUser = HttpSessionUtils.currentUser(session);
-		Question question = questionRepository.findById(questionId).get();
+		Question question = questionRepository.findById(questionId).orElse(null);
 		Answer answer = new Answer(contents, sessionUser, question);
 		answerRepository.save(answer);
 		return "redirect:/questions/{questionId}";

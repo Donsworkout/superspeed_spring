@@ -1,14 +1,23 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-{{> /include/head}}
+<head>{{> /include/head}}
 </head>
 
 <body>
 	{{> /include/navigation}}
+	<div class="jumbotron">
+		<h2 class="display-4">스프링남자</h2>
+		<p class="lead">
+			자바도 못하고, 스프링도 못하고 큰일 났다. 그런 의미에서 질문 받습니다.<br>
+			인메모리 데이터베이스라 제가 서버 끄면 글 날아갑니다. 평타칩니까? 
+		</p>
+		<hr class="my-4">
+		<p>남자답게 살겠습니다. </p>
+		<a class="btn btn-primary btn-lg" href="/questions" role="button">질문 ㄱ</a>
+	</div>
 	<div class="container pt-2">
-		<h1 class="center">도현</h1>
+		<h1 class="center"></h1>
 	</div>
 </body>
-{{> /include/default_js}}
+{{> /include/default_set}}
