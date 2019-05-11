@@ -8,9 +8,6 @@
 		<div class="row">
 			<div class="col-0 col-md-3"></div>
 			<div class="col-12 col-md-6">
-				{{#errorMessage}}
-				<p>{{errorMessage}}</p>
-				{{/errorMessage}}
 				{{#question}}
 				<div class="card">
 					<div class="card-body">
@@ -30,22 +27,22 @@
 				</div>
 				<hr>
 				<div class="pl-4">
-				{{#answers}}
-				<div class="card">
-					<div class="card-body">
-						<p class="card-text">{{contents}}</p>
-						<p class="card-text">
-							<small class="text-muted">{{createDate}} written by {{writer.userId}}</small>
-						</p>
-						<div class="text-right">
-							<form action="" method="POST">
-								<input type="hidden" name="_method" value="DELETE"/>
-								<button type="submit" class="btn btn-danger">삭제</button>
-							</form> 
+					{{#answers}}
+					<div class="card mb-3">
+						<div class="card-body">
+							<p class="card-text">{{contents}}</p>
+							<p class="card-text">
+								<small class="text-muted">{{createDate}} written by {{writer.userId}}</small>
+							</p>
+							<div class="text-right">
+								<form action="" method="POST">
+									<input type="hidden" name="_method" value="DELETE"/>
+									<button type="submit" class="btn btn-danger">삭제</button>
+								</form> 
+							</div>
 						</div>
 					</div>
-				</div>
-				{{/answers}}
+					{{/answers}}
 				</div>
 				<br>
 				<form action="/questions/{{id}}/answers" method="post">

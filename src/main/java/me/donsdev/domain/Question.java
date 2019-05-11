@@ -2,7 +2,7 @@ package me.donsdev.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ public class Question {
 
 	@OneToMany(mappedBy="question")
 	@OrderBy("id ASC")
-	public List<Answer> answers;
+	public Collection<Answer> answers;
 	
 	private String title;
 	

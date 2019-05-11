@@ -25,7 +25,7 @@ public class QuestionController {
 	
 	@GetMapping("")
 	public String listQuestion(Model model) {
-		model.addAttribute("questions", questionRepository.findAll());
+		model.addAttribute("questions", questionRepository.findAllByOrderByIdDesc());
 		return "/questions/q_list";
 	}
 	
@@ -39,11 +39,12 @@ public class QuestionController {
 
 	@GetMapping("/{id}")
 	public String show(@PathVariable Long id, Model model) {
-		Question question = questionRepository.getOne(id);
+		Question question = questionRepository.findById(id).orElse(null);;
 		if(question == null) {
 			return "redirect:/";
 		}
-		model.addAttribute("question", questionRepository.findById(id).get());
+		model.addAttribute("question", question);
+		System.out.println(question.answers);
 		return "/questions/show";
 	}
 	

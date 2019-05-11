@@ -5,19 +5,26 @@
 <body>
 	{{> /include/navigation}}
 	<div class="container pt-4">
-		<form name="question" method="post" action="/questions">
-			<div class="form-group">
-				<label for="formGroupExampleInput2">제목</label> <input
-					type="text" name="title" class="form-control" id="formGroupExampleInput2"
-					placeholder="Another input">
+		<div class="row">
+			<div class="col-0 col-md-3"></div>
+			<div class="col-12 col-md-6">
+				<form name="question" method="post" action="/questions">
+					<div class="form-group">
+						<label for="formGroupExampleInput2">제목</label> <input
+							type="text" name="title" class="form-control" id="formGroupExampleInput2"
+							placeholder="Another input">
+					</div>
+					<div class="form-group">
+						<label for="exampleFormControlTextarea1">내용</label>
+						<textarea name="contents" class="form-control" id="exampleFormControlTextarea1"
+							rows="6"></textarea>
+					</div>
+					<div class="text-right">
+						<button type="submit" class="btn btn-primary">저장</button>
+					</div>
+				</form>
 			</div>
-			<div class="form-group">
-				<label for="exampleFormControlTextarea1">내용</label>
-				<textarea name="contents" class="form-control" id="exampleFormControlTextarea1"
-					rows="3"></textarea>
-			</div>
-			<button type="submit" class="btn btn-primary">저장</button>
-		</form>
+		</div>
 	</div>
 </body>
 {{> /include/default_js}}
